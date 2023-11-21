@@ -101,7 +101,10 @@ const roundedTemperature = computed(() => {
 });
 
 const isFavourite = computed(() => {
-    return favourites.value[cityId] ? true : false;
+    if (favourites.value) {
+        return cityId in favourites.value;
+    }
+    return false
 });
 
 const getAverageTemp = (tempArray) => {
@@ -173,6 +176,9 @@ const getWeather = async () => {
 };
 
 const addToFavourites = () => {
+    if (!favourites.value) {
+        favourites.value = {}
+    }
     favourites.value[cityId] = { lat: props.cityInfo.lat, lon: props.cityInfo.lon };
     updateFavourites(favourites.value);
 };

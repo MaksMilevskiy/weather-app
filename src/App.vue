@@ -9,7 +9,13 @@
                 <img src="../src/assets/icons/app-logo.png" alt="Sun and clouds" />
             </div>
             <div class="header__group">
-                <LocaleChanger @changeLocale="(newLocale) => {locale = newLocale}" />
+                <LocaleChanger
+                    @changeLocale="
+                        (newLocale) => {
+                            locale = newLocale;
+                        }
+                    "
+                />
             </div>
         </header>
 
@@ -31,20 +37,27 @@ const updateFavourites = (value) => {
 
 onMounted(() => {
     const favItems = localStorage.getItem('favourites');
+    console.log(favItems);
     const currentLocale = localStorage.getItem('locale');
-    if (favItems != 'undefined') {
+    if (favItems) {
         favourites.value = JSON.parse(favItems);
     }
     if (currentLocale != 'undefined') {
         locale.value = JSON.parse(currentLocale);
     }
     provide('favourites', { favourites, updateFavourites });
-});
-// for some reason it doesn't work on "onBeforeUnmount" hook (because page reload isn't counted as "unmount"),
-// and onDestroy hook is not available in vue3
-window.addEventListener('beforeunload', () => {
-    localStorage.setItem('favourites', JSON.stringify(favourites.value));
-    localStorage.setItem('locale', JSON.stringify(locale.value));
+
+    watch(
+        favourites,
+        () => {
+            localStorage.setItem('favourites', JSON.stringify(favourites.value));
+        },
+        { deep: true }
+    );
+
+    watch(locale, () => {
+        localStorage.setItem('locale', JSON.stringify(locale.value));
+    });
 });
 </script>
 

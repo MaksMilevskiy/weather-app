@@ -1,5 +1,5 @@
 <template>
-    <main class="selected__wrapper">
+    <TransitionGroup tag="main" name="selected-wrapper" class="selected__wrapper">
         <WeatherCardList
             v-if="citiesList.length"
             :citiesList="citiesList"
@@ -8,14 +8,14 @@
         <div class="selected__empty" v-else>
             {{ $t('labels.favEmpty') }}
         </div>
-    </main>
+    </TransitionGroup>
 </template>
 
 <script setup>
-import WeatherCardList from '@/components/WeatherCardList.vue';
-import fetchCityFromCoords from '@/utils/fetchCityFromCoords';
 import { inject, onBeforeMount, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
+import WeatherCardList from '@/components/WeatherCardList.vue';
+import fetchCityFromCoords from '@/utils/fetchCityFromCoords';
 
 const { favourites } = inject('favourites');
 
@@ -24,10 +24,16 @@ const { locale } = useI18n();
 
 const setCitiesList = () => {
     citiesList.value = [];
-    Object.entries(favourites.value).forEach(async (cityData) => {
-        const cityInfo = await fetchCityFromCoords(cityData[1].lat, cityData[1].lon, locale.value);
-        citiesList.value.push(cityInfo);
-    });
+    if (favourites.value) {
+        Object.entries(favourites.value).forEach(async (cityData) => {
+            const cityInfo = await fetchCityFromCoords(
+                cityData[1].lat,
+                cityData[1].lon,
+                locale.value
+            );
+            citiesList.value.push(cityInfo);
+        });
+    }
 };
 
 onBeforeMount(() => {
@@ -55,5 +61,22 @@ onBeforeMount(() => {
         align-items: center;
         justify-content: center;
     }
+}
+
+.selected-wrapper-move,
+.selected-wrapper-enter-active,
+.selected-wrapper-leave-active {
+    transition: all 1s ease;
+}
+
+.selected-wrapper-enter-from,
+.selected-wrapper-leave-to {
+    opacity: 0;
+    position: absolute;
+    transform: translateX(-50px);
+}
+
+.selected-wrapper-leave-active {
+    position: absolute;
 }
 </style>

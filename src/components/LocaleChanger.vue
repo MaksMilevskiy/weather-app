@@ -6,13 +6,14 @@
             :key="`locale-${locale}`"
             @click="() => changeLocale(locale)"
         >
-            <img :src="`../src/assets/icons/${locale}.png`" :alt="`${locale} icon`" />
+            <img :src="`https://hatscripts.github.io/circle-flags/flags/${COUNTRY_TO_LOCALE_NAMES[locale]}.svg`" :alt="`${locale} icon`" />
         </div>
     </div>
 </template>
 
 <script setup>
 import { useI18n } from 'vue-i18n';
+import COUNTRY_TO_LOCALE_NAMES from '@/lib/constants/COUNTRY_TO_LOCALE_NAMES'
 
 const emit = defineEmits(['changeLocale'])
 
