@@ -28,7 +28,9 @@
                     </div>
                 </template>
             </ul>
-            <button @click="addCityCard">+</button>
+            <button @click="addCityCard">
+                <IconAdd />
+            </button>
         </div>
     </div>
 </template>
@@ -39,6 +41,7 @@ import { onClickOutside } from '@vueuse/core';
 import fetchCitiesAutocomplete from '@/utils/fetchCitiesAutocomplete';
 import getCityLocalName from '@/utils/helpers/getCityLocalName';
 import LoadingSpinner from '@/components/LoadingSpinner.vue';
+import IconAdd from '@/components/icons/IconAdd.vue'
 
 const emit = defineEmits(['addCity']);
 
@@ -145,17 +148,19 @@ onClickOutside(cityInput, () => toggleDropdown(false)); // can't use native onBl
         top: 5px;
         width: 30px;
         height: 30px;
-        background-color: #3498db;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        padding: 0;
+
         border: none;
-        border-radius: 50%;
+        border-radius: 25px;
+        background-color: transparent;
         color: #fff;
-        font-size: 22px;
         cursor: pointer;
         outline: none;
-
-        &:hover {
-            background-color: darken(#3498db, 10%);
-        }
     }
 
     .loading-spinner__wrapper {

@@ -178,6 +178,12 @@ const getDailyWeatherData = async (lat, lon) => {
 
 const getWeather = async () => {
     isDataLoaded.value = false;
+    if (!props.cityInfo?.lat) {
+        setTimeout(() => {
+            getWeather();
+        }, 1000)
+        return
+    }
     getCurrentWeatherData(props.cityInfo.lat, props.cityInfo.lon);
     getDailyWeatherData(props.cityInfo.lat, props.cityInfo.lon);
     isDataLoaded.value = true;
