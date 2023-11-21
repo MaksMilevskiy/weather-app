@@ -81,8 +81,8 @@ import getCityLocalName from '@/utils/helpers/getCityLocalName';
 
 const props = defineProps(['cityInfo', 'isAvailableDelete']);
 const emit = defineEmits(['deleteCity']);
-const cityId = `city${props.cityInfo.lat.toFixed(3) * 1000}.${
-    props.cityInfo.lon.toFixed(3) * 1000
+const cityId = `city${props?.cityInfo?.lat?.toFixed(3) * 1000}.${
+    props?.cityInfo?.lon?.toFixed(3) * 1000
 }`;
 
 const isDataLoaded = ref(false);
