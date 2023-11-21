@@ -1,5 +1,5 @@
 <template>
-    <TransitionGroup tag="main" name="selected-wrapper" class="selected__wrapper">
+    <main class="selected__wrapper">
         <WeatherCardList
             v-if="citiesList.length"
             :citiesList="citiesList"
@@ -8,30 +8,30 @@
         <div class="selected__empty" v-else>
             {{ $t('labels.favEmpty') }}
         </div>
-    </TransitionGroup>
+    </main>
 </template>
 
 <script setup>
 import { inject, onBeforeMount, ref, watch } from 'vue';
-import { useI18n } from 'vue-i18n';
 import WeatherCardList from '@/components/WeatherCardList.vue';
-import fetchCityFromCoords from '@/utils/fetchCityFromCoords';
+import fetchCitiesAutocomplete from '@/utils/fetchCitiesAutocomplete';
 
 const { favourites } = inject('favourites');
 
 const citiesList = ref([]);
-const { locale } = useI18n();
 
 const setCitiesList = () => {
     citiesList.value = [];
     if (favourites.value) {
-        Object.entries(favourites.value).forEach(async (cityData) => {
-            const cityInfo = await fetchCityFromCoords(
-                cityData[1].lat,
-                cityData[1].lon,
-                locale.value
-            );
-            citiesList.value.push(cityInfo);
+        favourites.value.forEach(async (cityData) => {
+            const cityValues = cityData.split('$');
+
+            const name = cityValues[0] || '';
+            const country = cityValues[1] || '';
+            const state = cityValues[2] || '';
+
+            const cityInfo = await fetchCitiesAutocomplete(name, state, country);
+            citiesList.value.push(cityInfo[0]);
         });
     }
 };
@@ -61,22 +61,5 @@ onBeforeMount(() => {
         align-items: center;
         justify-content: center;
     }
-}
-
-.selected-wrapper-move,
-.selected-wrapper-enter-active,
-.selected-wrapper-leave-active {
-    transition: all 1s ease;
-}
-
-.selected-wrapper-enter-from,
-.selected-wrapper-leave-to {
-    opacity: 0;
-    position: absolute;
-    transform: translateX(-50px);
-}
-
-.selected-wrapper-leave-active {
-    position: absolute;
 }
 </style>

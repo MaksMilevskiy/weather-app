@@ -19,7 +19,7 @@
         "removeFromFav": "Remove from Favourites",
         "addToFav": "Add to Favourites",
         "deleteCity": "Delete City",
-        "cityLimitExceeded": "City limit exceeded Please delete one of current cities",
+        "cityLimitExceeded": "City limit exceeded. Please delete one of current cities.",
         "favEmpty": "List of favourite places is empty.. :(",
         "dayWeek": "Day/Week",
         "dayNight": "Day/Night",

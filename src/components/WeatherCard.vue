@@ -66,6 +66,14 @@
             :isWeekMode="isWeekMode"
             :isNightTime="isNightTimeMode"
         />
+
+        <CustomModal
+            v-if="isOpenLimitModal"
+            :isModalOpen="isOpenLimitModal"
+            @closeModal="isOpenLimitModal = false"
+        >
+            {{ $t('labels.cityLimitExceeded') }}
+        </CustomModal>
     </li>
     <LoadingSpinner v-else />
 </template>
@@ -73,17 +81,16 @@
 <script setup>
 import { computed, inject, onMounted, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
-import LoadingSpinner from '@/components/LoadingSpinner.vue';
-import WeatherChart from '@/components/WeatherChart.vue';
 import fetchCurrentWeather from '@/utils/fetchCurrentWeather';
 import fetchDailyWeather from '@/utils/fetchDailyWeather';
 import getCityLocalName from '@/utils/helpers/getCityLocalName';
+import LoadingSpinner from '@/components/LoadingSpinner.vue';
+import WeatherChart from '@/components/WeatherChart.vue';
+import CustomModal from '@/components/CustomModal.vue'
 
 const props = defineProps(['cityInfo', 'isAvailableDelete']);
 const emit = defineEmits(['deleteCity']);
-const cityId = `city${props?.cityInfo?.lat?.toFixed(3) * 1000}.${
-    props?.cityInfo?.lon?.toFixed(3) * 1000
-}`;
+const cityId = `${props?.cityInfo?.name}$${props?.cityInfo?.country || ''}$${props?.cityInfo?.state || ''}`;
 
 const isDataLoaded = ref(false);
 const temperature = ref();
@@ -93,6 +100,7 @@ const weeklyWeatherData = ref();
 const isWeekMode = ref(false);
 const isNightTimeMode = ref(false);
 const weatherChartKey = ref(0);
+const isOpenLimitModal = ref(false);
 const { locale } = useI18n();
 const { favourites, updateFavourites } = inject('favourites');
 
@@ -101,10 +109,10 @@ const roundedTemperature = computed(() => {
 });
 
 const isFavourite = computed(() => {
-    if (favourites.value) {
-        return cityId in favourites.value;
+    if (favourites.value.length) {
+        return favourites.value.includes(cityId);
     }
-    return false
+    return false;
 });
 
 const getAverageTemp = (tempArray) => {
@@ -123,7 +131,7 @@ const setCurrentDaytime = () => {
     const date = new Date();
     const hours = date.getHours();
 
-    isNightTimeMode.value = !isDayTime(hours)
+    isNightTimeMode.value = !isDayTime(hours);
 };
 
 const getDaytimeAverageTemperature = () => {
@@ -176,15 +184,19 @@ const getWeather = async () => {
 };
 
 const addToFavourites = () => {
-    if (!favourites.value) {
-        favourites.value = {}
+    if (!favourites.value.length) {
+        favourites.value = [];
     }
-    favourites.value[cityId] = { lat: props.cityInfo.lat, lon: props.cityInfo.lon };
+    if (favourites.value.length >= 5) {
+        isOpenLimitModal.value = true;
+        return
+    }
+    favourites.value.push(cityId)
     updateFavourites(favourites.value);
 };
 
 const removeFromFavourites = () => {
-    delete favourites.value[cityId];
+    favourites.value.splice(favourites.value.indexOf(cityId), 1);
     updateFavourites(favourites.value);
 };
 
@@ -196,7 +208,7 @@ onMounted(() => {
         isWeekMode,
         (newValue) => {
             getWeather();
-            
+
             if (!newValue) {
                 setCurrentDaytime();
             }

@@ -30,7 +30,7 @@ import { useI18n } from 'vue-i18n';
 import LocaleChanger from '@/components/LocaleChanger.vue';
 
 const { locale } = useI18n();
-const favourites = ref({});
+const favourites = ref([]);
 const updateFavourites = (value) => {
     favourites.value = value;
 };
@@ -39,9 +39,9 @@ onMounted(() => {
     const favItems = localStorage.getItem('favourites');
     const currentLocale = localStorage.getItem('locale');
     if (favItems) {
-        favourites.value = JSON.parse(favItems);
+        favourites.value = favItems.split('+');
     }
-    if (currentLocale != 'undefined') {
+    if (currentLocale) {
         locale.value = JSON.parse(currentLocale);
     }
     provide('favourites', { favourites, updateFavourites });
@@ -49,7 +49,7 @@ onMounted(() => {
     watch(
         favourites,
         () => {
-            localStorage.setItem('favourites', JSON.stringify(favourites.value));
+            localStorage.setItem('favourites', favourites.value.join("+"));
         },
         { deep: true }
     );
@@ -57,6 +57,9 @@ onMounted(() => {
     watch(locale, () => {
         localStorage.setItem('locale', JSON.stringify(locale.value));
     });
+});
+window.addEventListener('beforeunload', () => {
+    // localStorage.removeItem('favourites');
 });
 </script>
 
