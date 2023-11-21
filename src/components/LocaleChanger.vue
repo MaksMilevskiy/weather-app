@@ -6,7 +6,7 @@
             :key="`locale-${locale}`"
             @click="() => changeLocale(locale)"
         >
-            <img :src="`../src/assets/icons/countries/${locale}.png`" :alt="`${locale} icon`" />
+            <img :src="`../src/assets/icons/${locale}.png`" :alt="`${locale} icon`" />
         </div>
     </div>
 </template>

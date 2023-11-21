@@ -65,7 +65,6 @@
             :dailyTemperature="dailyTemperature"
             :isWeekMode="isWeekMode"
             :isNightTime="isNightTimeMode"
-            :backgroundColor="backgroundColor"
         />
     </li>
     <LoadingSpinner v-else />
