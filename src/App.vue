@@ -30,29 +30,29 @@ import { useI18n } from 'vue-i18n';
 import LocaleChanger from '@/components/LocaleChanger.vue';
 
 const { locale } = useI18n();
-// const favourites = ref({});
-// const updateFavourites = (value) => {
-//     favourites.value = value;
-// };
+const favourites = ref({});
+const updateFavourites = (value) => {
+    favourites.value = value;
+};
 
 onMounted(() => {
-    // const favItems = localStorage.getItem('favourites');
+    const favItems = localStorage.getItem('favourites');
     const currentLocale = localStorage.getItem('locale');
-    // if (favItems) {
-    //     favourites.value = JSON.parse(favItems);
-    // }
+    if (favItems) {
+        favourites.value = JSON.parse(favItems);
+    }
     if (currentLocale != 'undefined') {
         locale.value = JSON.parse(currentLocale);
     }
-    // provide('favourites', { favourites, updateFavourites });
+    provide('favourites', { favourites, updateFavourites });
 
-    // watch(
-    //     favourites,
-    //     () => {
-    //         localStorage.setItem('favourites', JSON.stringify(favourites.value));
-    //     },
-    //     { deep: true }
-    // );
+    watch(
+        favourites,
+        () => {
+            localStorage.setItem('favourites', JSON.stringify(favourites.value));
+        },
+        { deep: true }
+    );
 
     watch(locale, () => {
         localStorage.setItem('locale', JSON.stringify(locale.value));

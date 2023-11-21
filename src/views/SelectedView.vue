@@ -24,28 +24,28 @@ const { locale } = useI18n();
 
 const setCitiesList = () => {
     citiesList.value = [];
-    // if (favourites.value) {
-    //     Object.entries(favourites.value).forEach(async (cityData) => {
-    //         const cityInfo = await fetchCityFromCoords(
-    //             cityData[1].lat,
-    //             cityData[1].lon,
-    //             locale.value
-    //         );
-    //         citiesList.value.push(cityInfo);
-    //     });
-    // }
+    if (favourites.value) {
+        Object.entries(favourites.value).forEach(async (cityData) => {
+            const cityInfo = await fetchCityFromCoords(
+                cityData[1].lat,
+                cityData[1].lon,
+                locale.value
+            );
+            citiesList.value.push(cityInfo);
+        });
+    }
 };
 
 onBeforeMount(() => {
     setCitiesList();
 
-    // watch(
-    //     favourites,
-    //     () => {
-    //         setCitiesList();
-    //     },
-    //     { deep: true }
-    // );
+    watch(
+        favourites,
+        () => {
+            setCitiesList();
+        },
+        { deep: true }
+    );
 });
 </script>
 
