@@ -1,6 +1,6 @@
 const fetchCitiesAutocomplete = async (name) => {
     const API_KEY = import.meta.env.VITE_WEATHER_APP_KEY;
-    const url = `http://api.openweathermap.org/geo/1.0/direct?q=${name}&limit=5&appid=${API_KEY}`;
+    const url = `https://api.openweathermap.org/geo/1.0/direct?q=${name}&limit=5&appid=${API_KEY}`;
 
     try {
         const data = await fetch(url);
