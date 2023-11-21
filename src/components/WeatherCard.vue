@@ -10,7 +10,7 @@
                     {{ getCityLocalName(cityInfo, $i18n.locale) }}
                 </div>
                 <div class="weather-card__actions">
-                    <button
+                    <!-- <button
                         v-if="isFavourite"
                         class="icon-button icon-star-filled"
                         @click="removeFromFavourites"
@@ -21,7 +21,7 @@
                         class="icon-button icon-star"
                         @click="addToFavourites"
                         :title="$t('labels.addToFav')"
-                    ></button>
+                    ></button> -->
                     <button
                         v-if="isAvailableDelete"
                         class="icon-button icon-trash"
@@ -94,18 +94,18 @@ const isWeekMode = ref(false);
 const isNightTimeMode = ref(false);
 const weatherChartKey = ref(0);
 const { locale } = useI18n();
-const { favourites, updateFavourites } = inject('favourites');
+// const { favourites, updateFavourites } = inject('favourites');
 
 const roundedTemperature = computed(() => {
     return Math.round(temperature.value);
 });
 
-const isFavourite = computed(() => {
-    if (favourites.value) {
-        return cityId in favourites.value;
-    }
-    return false
-});
+// const isFavourite = computed(() => {
+//     if (favourites.value) {
+//         return cityId in favourites.value;
+//     }
+//     return false
+// });
 
 const getAverageTemp = (tempArray) => {
     let temp = 0;
@@ -175,18 +175,18 @@ const getWeather = async () => {
     isDataLoaded.value = true;
 };
 
-const addToFavourites = () => {
-    if (!favourites.value) {
-        favourites.value = {}
-    }
-    favourites.value[cityId] = { lat: props.cityInfo.lat, lon: props.cityInfo.lon };
-    updateFavourites(favourites.value);
-};
+// const addToFavourites = () => {
+//     if (!favourites.value) {
+//         favourites.value = {}
+//     }
+//     favourites.value[cityId] = { lat: props.cityInfo.lat, lon: props.cityInfo.lon };
+//     updateFavourites(favourites.value);
+// };
 
-const removeFromFavourites = () => {
-    delete favourites.value[cityId];
-    updateFavourites(favourites.value);
-};
+// const removeFromFavourites = () => {
+//     delete favourites.value[cityId];
+//     updateFavourites(favourites.value);
+// };
 
 onMounted(() => {
     setCurrentDaytime();
