@@ -100,12 +100,12 @@ const roundedTemperature = computed(() => {
     return Math.round(temperature.value);
 });
 
-// const isFavourite = computed(() => {
-//     if (favourites.value) {
-//         return cityId in favourites.value;
-//     }
-//     return false
-// });
+const isFavourite = computed(() => {
+    if (favourites.value) {
+        return cityId in favourites.value;
+    }
+    return false
+});
 
 const getAverageTemp = (tempArray) => {
     let temp = 0;
