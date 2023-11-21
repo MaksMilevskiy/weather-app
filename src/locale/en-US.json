@@ -1,0 +1,32 @@
+{
+    "locales": {
+        "uk": "UA",
+        "en": "EN"
+    },
+    "shortDays": {
+        "mon": "Mon.",
+        "tue": "Tue.",
+        "wed": "Wed.",
+        "thu": "Thu.",
+        "fri": "Fri.",
+        "sat": "Sat.",
+        "sun": "Sun."
+    },
+    "labels": {
+        "typeNameOfCity": "City to add...",
+        "home": "Home",
+        "favourites": "Favourites",
+        "removeFromFav": "Remove from Favourites",
+        "addToFav": "Add to Favourites",
+        "deleteCity": "Delete City",
+        "cityLimitExceeded": "City limit exceeded Please delete one of current cities",
+        "favEmpty": "List of favourite places is empty.. :(",
+        "dayWeek": "Day/Week",
+        "dayNight": "Day/Night",
+        "areYouSureDeleteCity": "Are you sure you want to delete {0}?",
+        "delete": "Delete",
+        "cityAlreadyAdded": "City is already added",
+        "current": "Current",
+        "average": "Average"
+    }
+}
