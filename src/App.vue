@@ -2,8 +2,8 @@
     <div class="wrapper">
         <header class="header">
             <div class="header__group">
-                <RouterLink to="/">{{ $t('labels.home') }}</RouterLink>
-                <RouterLink to="/selected">{{ $t('labels.favourites') }}</RouterLink>
+                <RouterLink to="/" class="header__link">{{ $t('labels.home') }}</RouterLink>
+                <RouterLink to="/selected" class="header__link">{{ $t('labels.favourites') }}</RouterLink>
             </div>
             <div class="header__group">
                 <img src="../src/assets/icons/app-logo.png" alt="Sun and clouds" />
@@ -100,11 +100,11 @@ window.addEventListener('beforeunload', () => {
         }
     }
 
-    .header__group:first-child {
+    &__group:first-child {
         padding: 0;
     }
 
-    a {
+    &__link {
         height: 100%;
         padding: 0.5rem 1rem;
 
@@ -118,6 +118,9 @@ window.addEventListener('beforeunload', () => {
 
         &:hover {
             background-color: rgba(52, 152, 219, 0.2);
+        }
+        &.router-link-active {
+            background-color: #e3fbfc;
         }
 
         @media (max-width: 480px) {
