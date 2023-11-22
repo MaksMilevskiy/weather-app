@@ -45,9 +45,9 @@ import IconAdd from '@/components/icons/IconAdd.vue'
 
 const emit = defineEmits(['addCity']);
 
-const cityInput = ref();
+const cityInput = ref(null);
 const cityName = ref('');
-const selectedCityFullObject = ref();
+const selectedCityFullObject = ref(null);
 const isVisibleDropdown = ref(false);
 const autocompletedCities = ref([]);
 

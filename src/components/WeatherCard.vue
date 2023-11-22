@@ -93,14 +93,15 @@ const emit = defineEmits(['deleteCity']);
 const cityId = `${props?.cityInfo?.name}$${props?.cityInfo?.country || ''}$${props?.cityInfo?.state || ''}`;
 
 const isDataLoaded = ref(false);
-const temperature = ref();
+const temperature = ref(null);
 const weatherDescription = ref('');
 const dailyTemperature = ref(null);
-const weeklyWeatherData = ref();
+const weeklyWeatherData = ref(null);
 const isWeekMode = ref(false);
 const isNightTimeMode = ref(false);
 const weatherChartKey = ref(0);
 const isOpenLimitModal = ref(false);
+
 const { locale } = useI18n();
 const { favourites, updateFavourites } = inject('favourites');
 
