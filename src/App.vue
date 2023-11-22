@@ -58,9 +58,6 @@ onMounted(() => {
         localStorage.setItem('locale', JSON.stringify(locale.value));
     });
 });
-window.addEventListener('beforeunload', () => {
-    // localStorage.removeItem('favourites');
-});
 </script>
 
 <style lang="scss" scoped>
