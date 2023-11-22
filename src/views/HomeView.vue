@@ -13,7 +13,7 @@
         <Teleport to="#modal">
             <CustomModal
                 v-if="openedModalType"
-                :isModalOpen="openedModalType === 'limitExceeded'"
+                :isModalOpen="openedModalType"
                 @closeModal="toggleModalValue(null)"
             >
                 <template v-if="openedModalType === 'limitExceeded'">
