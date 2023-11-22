@@ -12,34 +12,26 @@
 
         <Teleport to="#modal">
             <CustomModal
-                v-if="openedModalType === 'limitExceeded'"
+                v-if="openedModalType"
                 :isModalOpen="openedModalType === 'limitExceeded'"
                 @closeModal="toggleModalValue(null)"
             >
-                {{ $t('labels.cityLimitExceeded') }}
-            </CustomModal>
+                <template v-if="openedModalType === 'limitExceeded'">
+                    {{ $t('labels.cityLimitExceeded') }}
+                </template>
 
-            <CustomModal
-                v-if="openedModalType === 'confirmDelete'"
-                :isModalOpen="openedModalType === 'confirmDelete'"
-                @closeModal="toggleModalValue(null)"
-            >
-                <span>{{
-                    $t('labels.areYouSureDeleteCity', [
-                        `${getCityLocalName(cityToDelete, $i18n.locale)}`
-                    ])
-                }}</span>
-                <button class="modal-button" @click="deleteCityCard(cityToDelete)">
-                    {{ $t('labels.delete') }}
-                </button>
-            </CustomModal>
+                <template v-else-if="openedModalType === 'confirmDelete'">
+                    <span>
+                        {{$t('labels.areYouSureDeleteCity', [`${getCityLocalName(cityToDelete, $i18n.locale)}`])}}
+                    </span>
+                    <button class="modal-button" @click="deleteCityCard(cityToDelete)">
+                        {{ $t('labels.delete') }}
+                    </button>
+                </template>
 
-            <CustomModal
-                v-if="openedModalType === 'cityAlreadyAdded'"
-                :isModalOpen="openedModalType === 'cityAlreadyAdded'"
-                @closeModal="toggleModalValue(null)"
-            >
-                {{ $t('labels.cityAlreadyAdded') }}
+                <template v-else-if="openedModalType === 'cityAlreadyAdded'">
+                    {{ $t('labels.cityLimitExceeded') }}
+                </template>
             </CustomModal>
         </Teleport>
     </main>
@@ -122,7 +114,7 @@ onMounted(async () => {
     margin: 10px 5px 0;
 
     display: block;
-    
+
     font-size: 16px;
     font-weight: bold;
     color: #fff;
