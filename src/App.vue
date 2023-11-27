@@ -19,7 +19,11 @@
             </div>
         </header>
 
-        <RouterView />
+        <RouterView v-slot="{ Component }">
+            <KeepAlive>
+                <component :is="Component" />
+            </KeepAlive>
+        </RouterView>
     </div>
 </template>
 
@@ -49,7 +53,7 @@ onMounted(() => {
     watch(
         favourites,
         () => {
-            localStorage.setItem('favourites', favourites.value.join("+"));
+            localStorage.setItem('favourites', favourites.value.join('+'));
         },
         { deep: true }
     );

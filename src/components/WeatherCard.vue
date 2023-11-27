@@ -240,8 +240,7 @@ onMounted(() => {
     align-items: center;
 
     &__wrapper {
-        max-width: 300px;
-        width: 100%;
+        width: 300px;
 
         margin: auto;
         border-radius: 8px;
